@@ -60,6 +60,7 @@ function oneshot(opts, callback) {
     var url = 'http://localhost:' + this.address().port;
     var urlopts = urlutil.parse(url);
     this.get = oneshot.get.bind(this, urlopts);
+    urlopts.method = 'GET';
     return callback(this, urlopts);
   }).listen(0);
 };
