@@ -1,0 +1,28 @@
+{
+  "name": "oneshot",
+  "version": "0.1.0",
+  "description": "Tiny little server for making one request and shutting down. Useful for testing.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "lodash": "~0.7.0"
+  },
+  "devDependencies": {
+    "tap": "~0.3.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brianloveswords/oneshot.git"
+  },
+  "keywords": [
+    "testing",
+    "server"
+  ],
+  "author": "Brian J. Brennan",
+  "license": "MIT"
+}
