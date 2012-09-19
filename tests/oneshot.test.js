@@ -60,3 +60,29 @@ test('redirecting server', function (t) {
     });
   })
 });
+
+test('multirequest', function (t) {
+  var opts = {
+    body: 'x',
+    requests: 2
+  };
+  oneshot(opts, function (server) {
+    server.get(function (response, body) {
+      t.same(opts.requests, 1, 'one less response');
+      server.get(function (response, body) {
+        t.same(opts.requests, 0, 'zero responses');
+        t.end();
+      });
+    });
+  });
+});
+
+test('statuscode', function (t) {
+  var opts = { body: 'x', statusCode: 420 };
+  oneshot(opts, function (server) {
+    server.get(function (response, body) {
+      t.same(response.statusCode, opts.statusCode);
+      t.end();
+    });
+  });
+});
