@@ -1,6 +1,6 @@
 # oneshot [![Build Status](https://secure.travis-ci.org/brianloveswords/oneshot.png?branch=master)](http://travis-ci.org/brianloveswords/oneshot)
 
-Testing server for serving a single resource and shutting down.
+Testing server for serving a single resource and shutting down, either after N requests (usually 1).
 
 # Usage
 
