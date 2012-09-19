@@ -9,10 +9,12 @@ var _ = require('lodash');
  * @asynchronous
  * @param {Object} opts Properties
  *   - body: Response body
- *   - type: `Content-Type` to use.
+ *   - type: `Content-Type` to use. (default: 'text/plain')
  *   - redirect: URL to redirect to before serving (default: null)
  *   - endless: Redirect forever (default: false)
  *   - requests: Number of requests to serve (default: 1)
+ *   - statusCude: The status code (default: 200)
+ *   - headers: Hash of headers
  * @return {(callback)}
  *   - server object with added `get` method
  *   - url object for server
