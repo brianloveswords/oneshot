@@ -13,10 +13,12 @@ var _ = require('lodash');
  *   - redirect: URL to redirect to before serving (default: null)
  *   - endless: Redirect forever (default: false)
  *   - requests: Number of requests to serve (default: 1)
- * @return {String} Full URL for the server.
+ * @return {(callback)}
+ *   - server object with added `get` method
+ *   - url object for server
  */
 
-module.exports = function oneshot(opts, callback) {
+function oneshot(opts, callback) {
   opts = _.defaults(opts, {
     body: null,
     type: 'text/plain',
@@ -55,12 +57,13 @@ module.exports = function oneshot(opts, callback) {
   }).on('listening', function () {
     var url = 'http://localhost:' + this.address().port;
     var urlopts = urlutil.parse(url);
-    this.get = get.bind(this, urlopts);
+    this.get = oneshot.get.bind(this, urlopts);
     return callback(this, urlopts);
   }).listen(0);
 };
 
-function get(opts, callback) {
+module.exports = oneshot;
+oneshot.get = function get(opts, callback) {
   if (!opts) throw new Error('no opts');
   opts.method = 'GET';
   var request = http.request(opts, function (res) {
@@ -73,4 +76,5 @@ function get(opts, callback) {
   }).on('error', function (err) {
     throw err;
   }).end();
-}
+};
+

@@ -24,7 +24,6 @@ test('serve one thing with specific mimetype', function (t) {
   });
 });
 
-
 test('serve with arbitrary headers', function (t) {
   var opts = {
     body: 'x',
@@ -39,6 +38,25 @@ test('serve with arbitrary headers', function (t) {
       t.same(headers['x-lol'], 'wut');
       t.same(headers['accept'], 'your poor and hungry');
       t.end();
+    });
+  })
+});
+
+test('redirecting server', function (t) {
+  var opts = {
+    body: 'x',
+    redirect: '/where',
+  };
+  oneshot(opts, function (server, urlopts) {
+    server.get(function (response, body) {
+      var headers = response.headers;
+      var location = headers['location'];
+      t.same(location, opts.redirect);
+      urlopts.pathname = location;
+      oneshot.get(urlopts, function (response, body) {
+        t.same(body, opts.body);
+        t.end();
+      })
     });
   })
 });
