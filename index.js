@@ -24,11 +24,12 @@ module.exports = function oneshot(opts, callback) {
     endless: false,
     requests: 1,
     statusCode: 200,
+    headers: {},
   });
-  var headers = {
+  var headers = _.defaults(opts.headers, {
     'Content-Length': opts.body.length,
     'Content-Type': opts.type
-  };
+  });
   var redirect = opts.redirect;
 
   function normalResponse(req, resp) {
@@ -53,6 +54,23 @@ module.exports = function oneshot(opts, callback) {
     return redirectResponse.bind(this)(req, resp);
   }).on('listening', function () {
     var url = 'http://localhost:' + this.address().port;
-    return callback(this, urlutil.parse(url));
+    var urlopts = urlutil.parse(url);
+    this.get = get.bind(this, urlopts);
+    return callback(this, urlopts);
   }).listen(0);
 };
+
+function get(opts, callback) {
+  if (!opts) throw new Error('no opts');
+  opts.method = 'GET';
+  var request = http.request(opts, function (res) {
+    var body = '';
+    res.on('data', function (buf) {
+      return body += buf;
+    }).on('end', function () {
+      return callback(res, body);
+    });
+  }).on('error', function (err) {
+    throw err;
+  }).end();
+}
