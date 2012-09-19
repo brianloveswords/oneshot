@@ -11,7 +11,7 @@ $ npm install oneshot
 ```js
 var oneshot = require('oneshot');
 
-// Serve one response and shut down. Assigns to a random port and
+// Serves one response and shuts down. Assigns to a random port and
 // calls back with a reference to the server and a parsed url, ready
 // for passing to `http.request`.
 oneshot({ body: 'goodbye, world\n' }, function(server, urlobj) {
@@ -21,7 +21,7 @@ oneshot({ body: 'goodbye, world\n' }, function(server, urlobj) {
 });
 ```
 
-```
+```js
 // You can pass in `type` to serve a specific content-type...
 oneshot({
   body: 'alert("badical");',
@@ -33,7 +33,7 @@ oneshot({
 });
 ```
 
-```
+```js
 // Or you can use the headers object to do whatever you want with
 // headers. WHATEVER YOU WANT.
 oneshot({
