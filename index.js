@@ -13,7 +13,7 @@ var _ = require('lodash');
  *   - redirect: URL to redirect to before serving (default: null)
  *   - endless: Redirect forever (default: false)
  *   - requests: Number of requests to serve (default: 1)
- *   - statusCude: The status code (default: 200)
+ *   - statusCode: The status code (default: 200)
  *   - headers: Hash of headers
  * @return {(callback)}
  *   - server object with added `get` method
